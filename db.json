@@ -1,3 +1,48 @@
 {
-  "users": []
+  "users": [
+    {
+      "id": "8ea7",
+      "department": "HR",
+      "name": "Ayush Soni",
+      "mobile": "9588422464",
+      "email": "ayush@gmail.com",
+      "gender": "male",
+      "doj": "2024-07-11",
+      "city": "Surat",
+      "status": false
+    },
+    {
+      "id": "100",
+      "department": "HR",
+      "name": "Sandip Rana",
+      "mobile": "9588422464",
+      "email": "sandip@gmail.com",
+      "gender": "male",
+      "doj": "2024-07-11",
+      "city": "Surat",
+      "status": false
+    },
+    {
+      "id": "200",
+      "department": "HR",
+      "name": "Sameer Nair",
+      "mobile": "9588422464",
+      "email": "ayush@gmail.com",
+      "gender": "male",
+      "doj": "2024-07-11",
+      "city": "Surat",
+      "status": false
+    },
+    {
+      "id": "300",
+      "department": "HR",
+      "name": "Ayush Soni",
+      "mobile": "9588422464",
+      "email": "ayush@gmail.com",
+      "gender": "male",
+      "doj": "2024-07-11",
+      "city": "Surat",
+      "status": false
+    }
+  ]
 }
