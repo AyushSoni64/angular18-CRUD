@@ -67,7 +67,7 @@
           </div>
         </div>
         <div class="card-body">
-          <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <form class="row g-3" [formGroup]="userForm" (ngSubmit)="onSubmit()">
             <div class="col-6">
               <select class="form-select" formControlName="department" required>
                 <option value="">Select Department</option>

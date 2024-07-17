@@ -50,10 +50,6 @@ export class UserComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.userForm.invalid) {
-      return;
-    }
-
     const user = this.userForm.value;
     if (this.editMode) {
       this._userService.updateUser(user).subscribe((res) => {
