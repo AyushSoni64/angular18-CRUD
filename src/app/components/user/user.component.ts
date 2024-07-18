@@ -1,67 +1,74 @@
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from '../../models/user';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.css',
+  styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
   userList: UserModel[] = [];
   editMode: boolean = false;
-  user: UserModel = {
-    department: '',
-    name: '',
-    mobile: '',
-    email: '',
-    gender: '',
-    doj: '',
-    city: '',
-    status: false,
-  };
+  userForm!: FormGroup;
+  cityList: string[] = ['Pune', 'Mumbai', 'Surat', 'Nashik', 'Satara'];
+  departmentList: string[] = ['IT', 'HR', 'Accounts', 'Sales', 'Management'];
+
   constructor(
     private _userService: UserService,
-    private _toastrService: ToastrService
+    private _toastrService: ToastrService,
+    private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
     this.getUserList();
+    this.buildForm();
   }
-  cityList: string[] = ['Pune', 'Mumbai', 'Surat', 'Nashik', 'Satara'];
-  departmentList: string[] = ['IT', 'HR', 'Accounts', 'Sales', 'Management'];
+
+  buildForm() {
+    this.userForm = this.fb.group({
+      department: ['', Validators.required],
+      name: ['', Validators.required],
+      mobile: ['', [Validators.required, Validators.pattern(/^0?[0-9]{10}$/)]],
+      email: ['', [Validators.required, Validators.email]],
+      gender: ['', Validators.required],
+      doj: ['', Validators.required],
+      city: ['', Validators.required],
+      status: [false],
+    });
+  }
 
   getUserList() {
     this._userService.getUsers().subscribe((res) => {
       this.userList = res;
     });
   }
-  onSubmit(form: NgForm): void {
-    debugger;
+
+  onSubmit() {
+    const user = this.userForm.value;
     if (this.editMode) {
-      console.log(form);
-      this._userService.updateUser(this.user).subscribe((res) => {
+      this._userService.updateUser(user).subscribe((res) => {
         this.getUserList();
         this.editMode = false;
-        form.reset();
+        this.userForm.reset();
         this._toastrService.success('User Updated Successfully', 'Success');
       });
     } else {
-      console.log(form);
-      this._userService.addUser(this.user).subscribe((res) => {
+      this._userService.addUser(user).subscribe((res) => {
         this.getUserList();
-        form.reset();
+        this.userForm.reset();
         this._toastrService.success('User Added Successfully', 'Success');
       });
     }
   }
 
   onEdit(userdata: UserModel) {
-    this.user = userdata;
+    this.userForm.patchValue(userdata);
     this.editMode = true;
   }
 
@@ -74,8 +81,9 @@ export class UserComponent implements OnInit {
       });
     }
   }
-  onResetForm(form: NgForm) {
-    form.reset();
+
+  onResetForm() {
+    this.userForm.reset();
     this.editMode = false;
     this.getUserList();
   }

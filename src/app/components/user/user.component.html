@@ -53,7 +53,6 @@
     </div>
 
     <div class="col-4">
-      <!-- USER FORM -->
       <div class="card">
         <div class="card-header bg-primary">
           <div class="row">
@@ -61,25 +60,16 @@
               <h6 class="p-2">{{ editMode ? "Update User " : "Add User" }}</h6>
             </div>
             <div class="col-6 text-end">
-              <button class="btn btn-info" (click)="onResetForm(userForm)">
+              <button class="btn btn-info" (click)="onResetForm()">
                 RESET
               </button>
             </div>
           </div>
         </div>
         <div class="card-body">
-          <form
-            class="row g-3"
-            #userForm="ngForm"
-            (ngSubmit)="onSubmit(userForm)"
-          >
+          <form class="row g-3" [formGroup]="userForm" (ngSubmit)="onSubmit()">
             <div class="col-6">
-              <select
-                class="form-select"
-                name="department"
-                quired
-                [(ngModel)]="user.department"
-              >
+              <select class="form-select" formControlName="department" required>
                 <option value="">Select Department</option>
                 @for (item of departmentList; track $index) {
                 <option>{{ item }}</option>
@@ -90,8 +80,7 @@
               <input
                 type="text"
                 class="form-control"
-                [(ngModel)]="user.name"
-                name="name"
+                formControlName="name"
                 required
                 placeholder="Name"
                 id=""
@@ -101,8 +90,7 @@
               <input
                 type="text"
                 class="form-control"
-                [(ngModel)]="user.email"
-                name="email"
+                formControlName="email"
                 required
                 placeholder="Email"
                 id=""
@@ -112,8 +100,7 @@
               <input
                 type="text"
                 class="form-control"
-                [(ngModel)]="user.mobile"
-                name="mobile"
+                formControlName="mobile"
                 required
                 placeholder="Mobile"
                 id=""
@@ -123,8 +110,7 @@
               <input
                 type="date"
                 class="form-control"
-                [(ngModel)]="user.doj"
-                name="doj"
+                formControlName="doj"
                 required
                 placeholder="DOJ"
                 id=""
@@ -135,12 +121,9 @@
                 <input
                   type="radio"
                   class="form-check-input"
-                  [(ngModel)]="user.gender"
+                  formControlName="gender"
                   value="male"
-                  name="gender"
                   required
-                  placeholder="Gender"
-                  id=""
                 />
                 <label class="form-check-label">Male</label>
               </div>
@@ -148,23 +131,15 @@
                 <input
                   type="radio"
                   class="form-check-input"
-                  [(ngModel)]="user.gender"
+                  formControlName="gender"
                   value="female"
-                  name="gender"
                   required
-                  placeholder="Gender"
-                  id=""
                 />
                 <label class="form-check-label">Female</label>
               </div>
             </div>
             <div class="col-6">
-              <select
-                class="form-select"
-                name="City"
-                equired
-                [(ngModel)]="user.city"
-              >
+              <select class="form-select" formControlName="city" required>
                 <option value="">Select City</option>
                 @for (item of cityList; track $index) {
                 <option>{{ item }}</option>
@@ -177,10 +152,7 @@
                 <input
                   type="checkbox"
                   class="form-check-input"
-                  [(ngModel)]="user.status"
-                  name="status"
-                  required
-                  id=""
+                  formControlName="status"
                 />
                 <label class="form-check-label"> Active ?</label>
               </div>
